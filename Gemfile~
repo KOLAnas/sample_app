@@ -22,6 +22,7 @@ end
 
 group :development, :test do
   gem 'ZenTest'
+  gem 'autotest-rails'
 end
 
 # Use unicorn as the web server

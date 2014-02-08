@@ -8,6 +8,12 @@ render_views
       get 'home'
       response.should be_success
     end
+
+    it "doit avoir le bon titre" do
+      get 'home'
+      response.should have_selector("title", :content => "Simple App du Tutoriel Ruby on Rails | Accueil")
+    end
+
   end
 
   describe "GET 'contact'" do
