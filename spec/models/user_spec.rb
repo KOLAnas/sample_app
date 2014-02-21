@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> modeling-users
 # == Schema Information
 #
 # Table name: users
@@ -21,7 +25,12 @@ describe User do
     User.create!(@attr)
   end
 
+<<<<<<< HEAD
     it "exige un nom" do
+=======
+
+  it "exige un nom" do
+>>>>>>> modeling-users
     bad_guy = User.new(@attr.merge(:nom => ""))
     bad_guy.should_not be_valid
   end
@@ -37,7 +46,11 @@ describe User do
     long_nom_user.should_not be_valid
   end
 
+<<<<<<< HEAD
   it "devrait accepter une adresse email valide" do
+=======
+ it "devrait accepter une adresse email valide" do
+>>>>>>> modeling-users
     adresses = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
     adresses.each do |address|
       valid_email_user = User.new(@attr.merge(:email => address))
@@ -66,6 +79,9 @@ describe User do
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
   end
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> modeling-users
 end

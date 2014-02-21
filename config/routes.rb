@@ -1,5 +1,8 @@
 SampleApp::Application.routes.draw do
+<<<<<<< HEAD
 
+=======
+>>>>>>> modeling-users
 resources :users
   get "users/new"
 
