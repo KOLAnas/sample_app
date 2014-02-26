@@ -1,18 +1,30 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
 
- def show
-    @user = User.find(params[:id])
-  end  
-=======
-  
+
 def show
     @user = User.find(params[:id])
-end
->>>>>>> modeling-users
+    @titre = @user.nom
+end  
 
+  
 def new
-	@titre = "Inscription"
+	
+	@user = User.new
+        @titre = "Inscription"
+	 
 end
+
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+    flash[:success] = "Bienvenue dans l'Application Exemple!"
+       redirect_to @user
+    else
+      @titre = "Inscription"
+      render 'new'
+    end
+  end
+
+
 
 end

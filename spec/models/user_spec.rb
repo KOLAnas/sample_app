@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> modeling-users
 # == Schema Information
 #
 # Table name: users
@@ -18,19 +14,21 @@ require 'spec_helper'
 describe User do
 
   before(:each) do
-    @attr = { :nom => "Example User", :email => "user@example.com" }
+    @attr = {
+      :nom => "Utilisateur exemple",
+      :email => "user@example.com",
+      :password => "foobar",
+      :password_confirmation => "foobar"
+    }
   end
 
   it "devrait creer une nouvelle instance dotee des attributs valides" do
     User.create!(@attr)
   end
 
-<<<<<<< HEAD
-    it "exige un nom" do
-=======
 
   it "exige un nom" do
->>>>>>> modeling-users
+
     bad_guy = User.new(@attr.merge(:nom => ""))
     bad_guy.should_not be_valid
   end
@@ -46,11 +44,8 @@ describe User do
     long_nom_user.should_not be_valid
   end
 
-<<<<<<< HEAD
-  it "devrait accepter une adresse email valide" do
-=======
+
  it "devrait accepter une adresse email valide" do
->>>>>>> modeling-users
     adresses = %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp]
     adresses.each do |address|
       valid_email_user = User.new(@attr.merge(:email => address))
@@ -79,9 +74,74 @@ describe User do
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
   end
-<<<<<<< HEAD
+
+  describe "password validations" do
+
+    it "devrait exiger un mot de passe" do
+      User.new(@attr.merge(:password => "", :password_confirmation => "")).
+        should_not be_valid
+    end
+
+    it "devrait exiger une confirmation du mot de passe qui correspond" do
+      User.new(@attr.merge(:password_confirmation => "invalid")).
+        should_not be_valid
+    end
+
+    it "devrait rejeter les mots de passe (trop) courts" do
+      short = "a" * 5
+      hash = @attr.merge(:password => short, :password_confirmation => short)
+      User.new(hash).should_not be_valid
+    end
+
+    it "devrait rejeter les (trop) longs mots de passe" do
+      long = "a" * 41
+      hash = @attr.merge(:password => long, :password_confirmation => long)
+      User.new(hash).should_not be_valid
+    end
+  end
+
+  describe "password encryption" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+   it "devrait definir le mot de passe crypte" do
+      @user.encrypted_password.should_not be_blank
+    end
+
+    it "devrait avoir un attribut  mot de passe crypte" do
+      @user.should respond_to(:encrypted_password)
+    end
 
 
-=======
->>>>>>> modeling-users
+    describe "Methode has_password?" do
+
+      it "doit retourner true si les mots de passe coincident" do
+        @user.has_password?(@attr[:password]).should be_true
+      end    
+
+      it "doit retourner false si les mots de passe divergent" do
+        @user.has_password?("invalide").should be_false
+      end 
+    end
+
+ describe "authenticate method" do
+
+      it "devrait retourner nul en cas d'inequation entre email/mot de passe" do
+        wrong_password_user = User.authenticate(@attr[:email], "wrongpass")
+        wrong_password_user.should be_nil
+      end
+
+      it "devrait retourner nil quand un email ne correspond a aucun utilisateur" do
+        nonexistent_user = User.authenticate("bar@foo.com", @attr[:password])
+        nonexistent_user.should be_nil
+      end
+
+      it "devrait retourner l'utilisateur si email/mot de passe correspondent" do
+        matching_user = User.authenticate(@attr[:email], @attr[:password])
+        matching_user.should == @user
+      end
+    end
+  end
 end
