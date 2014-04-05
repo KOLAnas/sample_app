@@ -5,10 +5,37 @@
         <%= gravatar_for @user %>
         <%= @user.nom %>
       </h1>
+ <%= render 'follow_form' if signed_in? %>
+
+ <center><%= will_paginate @microposts %></center>
     </td>
+
+ 
     <td class="sidebar round">
       <strong>Nom</strong> <%= @user.nom %><br />
-      <strong>URL</strong>  <%= link_to user_path(@user), @user %>
+      <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
+      <strong>Messages</strong> <%= @user.microposts.count %><br />
+      <strong>Age</strong> <%= @user.calculer_age  %><br />
+      <strong>Poids Actuel</strong> <%= @user.poids_actuel  %><br />
+      <strong>Poids Ideal</strong> <%= @user.poids_ideal  %><br />
+      <strong>Je veux faire du sport</strong> <%= @user.sportif  %><br />	
+      <strong>Je fais du sport</strong> <%= @user.sportiff  %><br />
+      <strong>IMC</strong> <%= @user.imc  %>
+      <strong>CV</strong><a href= "cv.html.erb"> <%= @user.data  %> </a>   
+	
+	
+	
+<%= render 'shared/stats' %>
     </td>
+
+      <% unless @user.microposts.empty? %>
+        <table class="microposts" summary="Micro-messages de l'utilisateur">
+          <%= render @microposts %>
+        </table>
+       
+      <% end %>
+    </td>
+
   </tr>
 </table>
+

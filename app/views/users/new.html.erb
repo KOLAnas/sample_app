@@ -1,15 +1,58 @@
 <h1>Inscription</h1>
 
 <%= form_for(@user) do |f| %>
-  <%= render 'shared/error_messages' %>
+ <%= render 'shared/error_messages', :object => f.object %>
+
   <div class="field">
     <%= f.label :nom %><br />
     <%= f.text_field :nom %>
   </div>
+
+
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>
+
+
+  <div class="field">
+    <%= f.label :date_naissance %><br />
+    <%= f.text_field :date_naissance %>
+  </div>
+
+  <div class="field">
+    <%= f.label :poids_actuel %><br />
+    <%= f.number_field :poids_actuel , :min => "25" , :max => "130" %> Kg
+  </div>
+
+  <div class="field">
+    <%= f.label :poids_ideal %><br />
+    <%= f.number_field :poids_ideal , :min => "25" , :max => "130" %> Kg
+  </div>
+
+  <div class="field">
+    <%= f.label :taille %><br />
+    <%= f.number_field :taille , :min => "120" , :max => "220"  %> Cm
+  </div>
+
+ <div class="field">
+    <%= f.label :sport, "J'aimerais faire du sport"%><br />
+    <%= f.radio_button :sport, true, :checked => true %> OUI
+    <%= f.radio_button :sport, false %> NON
+  </div>
+
+ <div class="field">
+    <%= f.label :spor, "Je fais du sport"%><br />
+    <%= f.radio_button :spor, true, :checked => true %> OUI
+    <%= f.radio_button :spor, false %> NON
+  </div>
+
+ <div class="field">
+<%= f.label :data,  "Charger un CV" %>
+<%= f.file_field :data %>
+</div>
+
   <div class="field">
     <%= f.label :password %><br />
     <%= f.password_field :password %>
@@ -18,7 +61,10 @@
     <%= f.label :password_confirmation, "Confirmation" %><br />
     <%= f.password_field :password_confirmation %>
   </div>
+ 
+
   <div class="actions">
     <%= f.submit "Inscription" %>
   </div>
+
 <% end %>
